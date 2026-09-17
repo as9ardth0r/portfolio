@@ -1,24 +1,34 @@
-# 🌐 Portfolio Professionnel - Broutin Joel
+# 🌐 Professional Portfolio — Joël Broutin
 
-Bienvenue sur le dépôt de mon portfolio en ligne, conçu pour présenter mon parcours, mes compétences techniques en développement, ainsi que mon approche analytique et transversale.
+Welcome to the repository for my online portfolio, built to present my
+background, my technical development skills, and my analytical,
+cross-disciplinary approach.
 
-🔗 **Voir le site en direct :** [https://as9ardth0r.github.io/portfolio/](https://as9ardth0r.github.io/portfolio/)
+🔗 **Live site:** [https://as9ardth0r.github.io/portfolio/](https://as9ardth0r.github.io/portfolio/)
 
 ---
 
-## 🚀 À propos de moi
-Autodidacte passionné par la logique algorithmique, l'architecture des systèmes et la résolution de problèmes complexes. Mon parcours croise l'ingénierie informatique, les sciences appliquées et des expériences de terrain variées, ce qui me confère une forte capacité d'analyse et une grande rigueur méthodologique.
+## 🚀 About me
 
-## 🛠️ Stack Technique & Compétences
-* **Développement & Logique :** Python, GOLANG, PHP, JavaScript, HTML, MySQL.
-* **Systèmes & Réseaux :** Administration Windows Server & Linux, Architecture Réseau.
-* **Conception :** Modélisation 3D (Autodesk, C4D, Maya).
-* **Outils :** Suite bureautique Microsoft, Suite Ciel Comptabilité.
+Self-taught, passionate about algorithmic logic, systems architecture,
+and complex problem-solving. My background crosses computer
+engineering, applied sciences, and varied hands-on experience, which
+gives me strong analytical ability and methodological rigor.
 
-## 📂 Structure du projet
-* `index.html` : Structure de la page web principale.
-* `style.css` : Feuille de style personnalisée (design épuré et moderne).
-* `profil.jpeg` : Photographie de profil.
+## 🛠️ Tech Stack & Skills
 
-## 📄 Licence
-Ce projet est open-source et disponible sous licence libre.
+- **Development & Logic:** Python, Go, PHP, JavaScript, HTML, MySQL.
+- **Systems & Networking:** Windows Server & Linux administration,
+  network architecture.
+- **Design:** 3D modeling (Autodesk, C4D, Maya).
+- **Tools:** Microsoft Office suite, Ciel accounting software.
+
+## 📂 Project structure
+
+- `index.html`: main page structure.
+- `style.css`: custom stylesheet (clean, modern design).
+- `profil.jpeg`: profile photo.
+
+## 📄 License
+
+This project is open-source and available under a free license.
