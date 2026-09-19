@@ -1,110 +1,393 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Joël Broutin – Développeur Full-Stack & Systèmes</title>
-    <link rel="stylesheet" href="style.css">
+    <title>L. Broutin — Développeur Full-Stack & Systèmes</title>
+    <!-- Tailwind CSS pour une base propre et moderne -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkbg: '#050508',
+                        cardbg: '#0c0c14',
+                        neoncyan: '#00f0ff',
+                        neonpurple: '#b000ff',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- GSAP pour des animations fluides dignes des intros Flash -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #050508;
+            color: #f3f4f6;
+            overflow-x: hidden;
+            cursor: default;
+        }
+
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Curseur personnalisé futuriste */
+        #custom-cursor {
+            pointer-events: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 30px;
+            height: 30px;
+            border: 1px solid rgba(0, 240, 255, 0.5);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #custom-cursor::after {
+            content: '';
+            width: 4px;
+            height: 4px;
+            background-color: #00f0ff;
+            border-radius: 50%;
+        }
+
+        /* Effet Glassmorphism poussé */
+        .glass-card {
+            background: rgba(12, 12, 20, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .glass-card:hover {
+            border-color: rgba(0, 240, 255, 0.3);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.15);
+        }
+
+        /* Grille animée en arrière-plan */
+        .bg-grid {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+        }
+
+        /* Barre de scroll personnalisée */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050508;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e1e2f;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00f0ff;
+        }
+    </style>
 </head>
-<body>
+<body class="bg-grid relative min-h-screen">
 
-<header>
-    <div class="container">
-        <img src="profil.jpeg" alt="Joël Broutin" class="profile-pic">
-        <h1>Joël Broutin</h1>
-        <h2>Développeur Full-Stack & Systèmes</h2>
-        <p class="tagline">Je transforme des idées complexes en solutions concrètes et robustes.</p>
-        <div class="contacts">
-            <span>📍 Wimereux, France</span>
-            <span>📧 broutinjoelalain@gmail.com</span>
-            <span><a href="https://github.com/as9ardth0r" target="_blank">GitHub</a></span>
-            <span><a href="https://www.linkedin.com/in/joel-broutin-177856437/" target="_blank">LinkedIn</a></span>
+    <!-- Curseur interactif -->
+    <div id="custom-cursor" class="hidden md:flex"></div>
+
+    <!-- En-tête / Navigation minimale -->
+    <header class="fixed top-0 left-0 w-full z-50 glass-card border-b border-white/5 px-6 py-4 flex justify-between items-center transition-all duration-300">
+        <div class="flex items-center space-x-3">
+            <span class="w-3 h-3 bg-neoncyan rounded-full animate-pulse shadow-[0_0_10px_#00f0ff]"></span>
+            <span class="font-mono text-sm tracking-widest text-white font-bold">L. BROUTIN // 2026</span>
         </div>
-        <p class="availability">✅ Disponible pour missions freelance (remote / hybride)</p>
-    </div>
-</header>
+        <nav class="hidden md:flex space-x-8 text-sm font-medium text-gray-400">
+            <a href="#about" class="hover:text-neoncyan transition-colors">01. Profil</a>
+            <a href="#skills" class="hover:text-neoncyan transition-colors">02. Stack</a>
+            <a href="#projects" class="hover:text-neoncyan transition-colors">03. Projets</a>
+            <a href="#contact" class="hover:text-neoncyan transition-colors">04. Contact</a>
+        </nav>
+        <button id="sound-toggle" class="text-xs font-mono px-3 py-1.5 rounded border border-white/10 hover:border-neoncyan text-gray-300 hover:text-neoncyan transition-all">
+            AUDIO: OFF
+        </button>
+    </header>
 
-<main class="container">
+    <!-- Canvas interactif pour l'ambiance visuelle -->
+    <canvas id="hero-canvas" class="fixed inset-0 pointer-events-none z-0 opacity-40"></canvas>
 
-    <!-- Ce que je propose -->
-    <section class="card">
-        <h3>Ce que je propose</h3>
-        <div class="services">
-            <div class="service">
-                <h4>Développement Full-Stack</h4>
-                <p>Applications web, outils internes et dashboards (Python, Golang, JavaScript, PHP, MySQL)</p>
+    <!-- Contenu Principal -->
+    <main class="relative z-10 pt-32 px-6 max-w-6xl mx-auto space-y-32 pb-24">
+
+        <!-- Section Hero (Accueil) -->
+        <section id="about" class="min-h-[75vh] flex flex-col justify-center items-start space-y-8">
+            <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-neoncyan/10 border border-neoncyan/30 text-neoncyan text-xs font-mono tracking-wider">
+                <span>SYSTEM_ONLINE // STATUS: READY</span>
             </div>
-            <div class="service">
-                <h4>Systèmes & Automatisation</h4>
-                <p>Scripts, administration Linux/Windows Server, architecture réseau et automatisation de process</p>
+            
+            <div class="space-y-4">
+                <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight text-white">
+                    L. Broutin
+                </h1>
+                <p class="text-xl md:text-2xl font-mono text-transparent bg-clip-text bg-gradient-to-r from-neoncyan to-neonpurple font-semibold">
+                    Développeur Full-Stack & Systèmes
+                </p>
             </div>
-            <div class="service">
-                <h4>Prototypage & Analyse</h4>
-                <p>POC rapides, analyses de données, firmware embarqué et solutions techniques sur mesure</p>
+
+            <p class="max-w-2xl text-gray-400 text-lg leading-relaxed">
+                Conception d'architectures logicielles robustes, d'interfaces web immersives et optimisation de systèmes complexes. Une approche technique exigeante au service du design et de la performance.
+            </p>
+
+            <div class="flex flex-wrap gap-4 pt-4">
+                <a href="#projects" class="px-8 py-3.5 rounded-lg bg-neoncyan text-darkbg font-bold text-sm tracking-wider hover:bg-white transition-all shadow-[0_0_20px_rgba(0,240,255,0.4)]">
+                    EXPLORER LES PROJETS
+                </a>
+                <a href="#contact" class="px-8 py-3.5 rounded-lg glass-card text-white font-semibold text-sm tracking-wider hover:border-neoncyan transition-all">
+                    ME CONTACTER
+                </a>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Projets sélectionnés -->
-    <section class="card">
-        <h3>Projets sélectionnés</h3>
-
-        <div class="project">
-            <h4>DevShelf</h4>
-            <p>Dashboard minimaliste pour développeurs et créatifs. Backend FastAPI + cœur haute performance en Rust + interface web propre.</p>
-            <a href="https://github.com/as9ardth0r/devshelf" target="_blank">Voir sur GitHub →</a>
-        </div>
-
-        <div class="project">
-            <h4>CERN Dimuon Analysis</h4>
-            <p>Reconstruction de la masse invariante (J/ψ, ψ', Υ, boson Z) à partir de 100 000 événements réels CMS Open Data.</p>
-            <a href="https://github.com/as9ardth0r/cern-dimuon-analysis" target="_blank">Voir le projet →</a>
-        </div>
-
-        <div class="project">
-            <h4>Galactic Map</h4>
-            <p>Carte 3D interactive de 25 131 étoiles réelles (catalogue HYG) avec les 88 constellations officielles de l’IAU et structure spirale de la Voie lactée.</p>
-            <a href="https://github.com/as9ardth0r/galactic-map" target="_blank">Voir le projet →</a>
-        </div>
-
-        <div class="project">
-            <h4>Nano-Drone Collision Avoidance</h4>
-            <p>Firmware de prévention de collisions pour nano-drone (STM32F405). Array de 5 capteurs ToF, contrôleur potential-field, pilotage via BLE.</p>
-            <a href="https://github.com/as9ardth0r/nano-drone" target="_blank">Voir le projet →</a>
-        </div>
-    </section>
-
-    <!-- Compétences -->
-    <section class="card">
-        <h3>Compétences techniques</h3>
-        <div class="skills-grid">
-            <div>
-                <h4>Langages</h4>
-                <p>Python • Golang • JavaScript • PHP • HTML/CSS • C (embarqué)</p>
+        <!-- Section Compétences / Stack -->
+        <section id="skills" class="space-y-12">
+            <div class="flex items-center space-x-4">
+                <span class="font-mono text-neoncyan text-lg">02.</span>
+                <h2 class="text-3xl font-bold tracking-tight text-white">Expertise & Stack Technique</h2>
+                <div class="flex-1 h-[1px] bg-white/10"></div>
             </div>
-            <div>
-                <h4>Systèmes & Données</h4>
-                <p>Linux • Windows Server • MySQL • Architecture réseau • Automatisation</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Carte Back-End / Systèmes -->
+                <div class="glass-card p-8 rounded-2xl space-y-4 transition-all duration-300">
+                    <div class="w-12 h-12 rounded-xl bg-neoncyan/10 border border-neoncyan/30 flex items-center justify-center text-neoncyan font-mono font-bold text-xl">
+                        SYS
+                    </div>
+                    <h3 class="text-xl font-bold text-white">Systèmes & Back-End</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Architecture serveur, administration système, optimisation des flux de données et bases de données scalables.
+                    </p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="px-2.5 py-1 rounded bg-white/5 text-xs font-mono text-gray-300">Linux</span>
+                        <span class="px-2.5 py-1 rounded bg-white/5 text-xs font-mono text-gray-300">Node.js</span>
+                        <span class="px-2.5 py-1 rounded bg-white/5 text-xs font-mono text-gray-300">Python</span>
+                        <span class="px-2.5 py-1 rounded bg-white/5 text-xs font-mono text-gray-300">Docker</span>
+                    </div>
+                </div>
+
+                <!-- Carte Front-End -->
+                <div class="glass-card p-8 rounded-2xl space-y-4 transition-all duration-300">
+                    <div class="w-12 h-12 rounded-xl bg-neonpurple/10 border border-neonpurple/30 flex items-center justify-center text-neonpurple font-mono font-bold text-xl">
+                        UI
+                    </div>
+                    <h3 class="text-xl font-bold text-white">Front-End & Expérience</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Développement d'interfaces web dynamiques, réactives, soignées et centrées sur l'expérience utilisateur.
+                    </p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="px-2.5 py-1 rounded bg-white/5 text-xs font-mono text-gray-300">JavaScript</span>
+                        <span class="px-2.5 py-1 rounded bg-white/5 text-xs font-mono text-gray-300">Tailwind</span>
+                        <span class="px-2.5 py-1 rounded bg-white/5 text-xs font-mono text-gray-300">Canvas API</span>
+                        <span class="px-2.5 py-1 rounded bg-white/5 text-xs font-mono text-gray-300">HTML5/CSS3</span>
+                    </div>
+                </div>
+
+                <!-- Carte Outils & DevOps -->
+                <div class="glass-card p-8 rounded-2xl space-y-4 transition-all duration-300">
+                    <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 font-mono font-bold text-xl">
+                        OPS
+                    </div>
+                    <h3 class="text-xl font-bold text-white">DevOps & Outils</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Gestion de versions, automatisation des déploiements et intégration continue pour des environnements stables.
+                    </p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="px-2.5 py-1 rounded bg-white/5 text-xs font-mono text-gray-300">Git / GitHub</span>
+                        <span class="px-2.5 py-1 rounded bg-white/5 text-xs font-mono text-gray-300">CI/CD</span>
+                        <span class="px-2.5 py-1 rounded bg-white/5 text-xs font-mono text-gray-300">Bash</span>
+                    </div>
+                </div>
             </div>
-            <div>
-                <h4>Autres</h4>
-                <p>Prototypage rapide • Analyse de données • Conception 3D • Firmware embarqué</p>
+        </section>
+
+        <!-- Section Projets -->
+        <section id="projects" class="space-y-12">
+            <div class="flex items-center space-x-4">
+                <span class="font-mono text-neoncyan text-lg">03.</span>
+                <h2 class="text-3xl font-bold tracking-tight text-white">Projets & Réalisations</h2>
+                <div class="flex-1 h-[1px] bg-white/10"></div>
             </div>
-        </div>
-    </section>
 
-    <!-- Parcours court -->
-    <section class="card">
-        <h3>Parcours</h3>
-        <p>Autodidacte en développement logiciel et systèmes, avec un parcours terrain exigeant (logistique, maritime, artisanat) qui m’a appris la rigueur, l’autonomie et la capacité à livrer dans des contextes concrets.</p>
-        <p>Formation Web Designer (Greta Calais) + formations techniques complémentaires.</p>
-    </section>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Projet 1 -->
+                <div class="glass-card p-8 rounded-2xl space-y-6 group transition-all duration-300">
+                    <div class="flex justify-between items-start">
+                        <span class="font-mono text-xs text-neoncyan bg-neoncyan/10 px-3 py-1 rounded-full border border-neoncyan/20">PROJET 01</span>
+                        <a href="https://github.com/as9ardth0r" target="_blank" class="text-gray-400 hover:text-white transition-colors font-mono text-sm">GITHUB ↗</a>
+                    </div>
+                    <div class="space-y-2">
+                        <h3 class="text-2xl font-bold text-white group-hover:text-neoncyan transition-colors">Infrastructure & Logiciel Full-Stack</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">
+                            Développement d'une application complète combinant un système backend robuste et une interface interactive optimisée pour la gestion de processus.
+                        </p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="text-xs font-mono text-gray-400 bg-black/40 px-3 py-1 rounded border border-white/5">Architecture</span>
+                        <span class="text-xs font-mono text-gray-400 bg-black/40 px-3 py-1 rounded border border-white/5">Full-Stack</span>
+                    </div>
+                </div>
 
-</main>
+                <!-- Projet 2 -->
+                <div class="glass-card p-8 rounded-2xl space-y-6 group transition-all duration-300">
+                    <div class="flex justify-between items-start">
+                        <span class="font-mono text-xs text-neonpurple bg-neonpurple/10 px-3 py-1 rounded-full border border-neonpurple/20">PROJET 02</span>
+                        <a href="https://github.com/as9ardth0r" target="_blank" class="text-gray-400 hover:text-white transition-colors font-mono text-sm">GITHUB ↗</a>
+                    </div>
+                    <div class="space-y-2">
+                        <h3 class="text-2xl font-bold text-white group-hover:text-neonpurple transition-colors">Outils Systèmes & Automatisation</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">
+                            Conception de scripts et d'utilitaires pour rationaliser les tâches d'administration système et sécuriser les environnements de déploiement.
+                        </p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="text-xs font-mono text-gray-400 bg-black/40 px-3 py-1 rounded border border-white/5">Systems</span>
+                        <span class="text-xs font-mono text-gray-400 bg-black/40 px-3 py-1 rounded border border-white/5">Automation</span>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-<footer>
-    <p>© 2026 – Joël Broutin | <a href="https://github.com/as9ardth0r">GitHub</a> | Disponible pour missions freelance</p>
-</footer>
+        <!-- Section Contact -->
+        <section id="contact" class="space-y-12">
+            <div class="flex items-center space-x-4">
+                <span class="font-mono text-neoncyan text-lg">04.</span>
+                <h2 class="text-3xl font-bold tracking-tight text-white">Contact</h2>
+                <div class="flex-1 h-[1px] bg-white/10"></div>
+            </div>
 
+            <div class="glass-card p-10 rounded-2xl text-center space-y-6 max-w-2xl mx-auto">
+                <h3 class="text-2xl font-bold text-white">Envie de collaborer ou d'échanger ?</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                    Que ce soit pour un projet de développement, une question technique ou une opportunité, mon canal de communication est ouvert.
+                </p>
+                <div class="pt-4 flex justify-center gap-4">
+                    <a href="mailto:contact@example.com" class="px-8 py-3.5 rounded-lg bg-neoncyan text-darkbg font-bold text-sm tracking-wider hover:bg-white transition-all shadow-[0_0_20px_rgba(0,240,255,0.4)]">
+                        ENVOYER UN EMAIL
+                    </a>
+                    <a href="https://github.com/as9ardth0r" target="_blank" class="px-8 py-3.5 rounded-lg glass-card text-white font-semibold text-sm tracking-wider hover:border-neoncyan transition-all">
+                        PROFIL GITHUB
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Pied de page -->
+    <footer class="relative z-10 border-t border-white/5 py-8 text-center text-xs font-mono text-gray-500 space-y-2">
+        <p>© 2026 L. BROUTIN. Tous droits réservés.</p>
+        <p class="text-gray-600">Design inspiré de l'âge d'or du web & propulsé par les standards modernes.</p>
+    </footer>
+
+    <!-- Scripts JavaScript pour l'interactivité -->
+    <script>
+        // Gestion du curseur personnalisé
+        const cursor = document.getElementById('custom-cursor');
+        window.addEventListener('mousemove', (e) => {
+            cursor.style.left = `${e.clientX}px`;
+            cursor.style.top = `${e.clientY}px`;
+        });
+
+        // Effet particules / grille interactive en arrière-plan (Canvas)
+        const canvas = document.getElementById('hero-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        for (let i = 0; i < 40; i++) {
+            particles.push({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                vx: (Math.random() - 0.5) * 0.5,
+                vy: (Math.random() - 0.5) * 0.5,
+                radius: Math.random() * 1.5
+            });
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            ctx.fillStyle = 'rgba(0, 240, 255, 0.3)';
+            ctx.strokeStyle = 'rgba(0, 240, 255, 0.05)';
+
+            particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+
+                if (p.x < 0 || p.x > width) p.vx *= -1;
+                if (p.y < 0 || p.y > height) p.vy *= -1;
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // Audio UI discret (Optionnel / Web Audio API)
+        let audioCtx = null;
+        let soundEnabled = false;
+        const soundToggle = document.getElementById('sound-toggle');
+
+        soundToggle.addEventListener('click', () => {
+            soundEnabled = !soundEnabled;
+            if (soundEnabled) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                soundToggle.textContent = "AUDIO: ON";
+                soundToggle.classList.add('border-neoncyan', 'text-neoncyan');
+            } else {
+                if (audioCtx) audioCtx.close();
+                soundToggle.textContent = "AUDIO: OFF";
+                soundToggle.classList.remove('border-neoncyan', 'text-neoncyan');
+            }
+        });
+
+        function playBeep(freq = 440, duration = 0.05) {
+            if (!soundEnabled || !audioCtx) return;
+            try {
+                let osc = audioCtx.createOscillator();
+                let gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.value = freq;
+                gain.gain.setValueAtTime(0.02, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch(e) {}
+        }
+
+        document.querySelectorAll('a, button').forEach(el => {
+            el.addEventListener('mouseenter', () => playBeep(587.33)); // Note Ré
+        });
+    </script>
 </body>
 </html>
