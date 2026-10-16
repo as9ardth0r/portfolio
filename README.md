@@ -32,3 +32,5 @@ gives me strong analytical ability and methodological rigor.
 ## 📄 License
 
 This project is open-source and available under a free license.
+
+SIRET : 13140299200013 broutin joel
